@@ -3,12 +3,20 @@ import { config } from "dotenv";
 import { connectDB, disconnectDB } from "./config/db";
 
 import movieRoutes from "./routes/movieRoutes";
+import authRoutes from  "./routes/authRoutes"
 
 config();
 connectDB();
 
 const app = express();
+
+//Body parsing middlewares
+app.use(express.json());
+app.use(express.urlencoded({extended: true}))
+
+//API Routes
 app.use("/movies", movieRoutes)
+app.use("/auth", authRoutes)
 
 
 app.get("/hello", (req,res) => {
