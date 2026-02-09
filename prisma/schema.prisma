@@ -31,7 +31,7 @@ model Movie {
   releaseYear Int
   genres String[] @default([])
   runtime Int?
-  postedUrl String?
+  posterUrl String?
   createdBy String
   createdAt DateTime @default(now())
 
@@ -45,8 +45,8 @@ model WatchListItem {
   id String @id @default(uuid())
   userId String
   movieId String
-  overview String
-  status WatchListStatus @default(PlANNED)
+  overview String?
+  status WatchListStatus @default(PLANNED)
   rating Int?
   notes  String?
   CreatedAt DateTime @default(now())
@@ -56,10 +56,12 @@ model WatchListItem {
   user User @relation(fields:[userId], references: [id], onDelete: Cascade)
   movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
 
+  @@unique([userId, movieId])
+
 }
 
 enum WatchListStatus {
-  PlANNED
+  PLANNED
   WATCHING
   COMPLETED
   DROPPED
